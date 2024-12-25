@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import FAQ from './pages/FAQ';
+import CategoriesMobile from './pages/CategoriesMobile';
 import './index.css';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="/cm" element={<CategoriesMobile />} /> 
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<FAQ />} />
         </Routes>

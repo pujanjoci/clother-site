@@ -46,11 +46,6 @@ const BannerCarousel = () => {
   const handleMouseMove = (e) => {
     if (!isDragging) return;
 
-    // Change the cursor to 'not-allowed' when dragging and moving
-    if (carouselRef.current) {
-      carouselRef.current.style.cursor = 'not-allowed';
-    }
-
     const diff = e.clientX - startX;
     if (diff > 50) {
       prevBanner();
@@ -74,6 +69,35 @@ const BannerCarousel = () => {
     }
   };
 
+  // Touch event handlers
+  const handleTouchStart = (e) => {
+    setIsDragging(true);
+    setStartX(e.touches[0].clientX);
+    if (carouselRef.current) {
+      carouselRef.current.style.cursor = 'grabbing'; // Cursor changes to grabbing
+    }
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isDragging) return;
+
+    const diff = e.touches[0].clientX - startX;
+    if (diff > 50) {
+      prevBanner();
+      setIsDragging(false);
+      resetCursor();
+    } else if (diff < -50) {
+      nextBanner();
+      setIsDragging(false);
+      resetCursor();
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+    resetCursor();
+  };
+
   return (
     <div
       className="relative flex flex-col items-center justify-center w-full h-96 overflow-hidden"
@@ -82,6 +106,9 @@ const BannerCarousel = () => {
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
       style={{ cursor: 'grab' }} // Default to open hand
     >
       {/* Current Banner Image */}
