@@ -1,0 +1,96 @@
+[
+    {
+      "category": "Shipping & Returns",
+      "questions": [
+        {
+          "question": "What is your return policy?",
+          "answer": "We accept returns within 30 days of purchase. Items must be unused and in their original packaging."
+        },
+        {
+          "question": "How long does shipping take?",
+          "answer": "Shipping typically takes 5-7 business days depending on your location."
+        },
+        {
+          "question": "Do you offer international shipping?",
+          "answer": "Yes, we offer international shipping to select countries. Shipping times and costs may vary."
+        },
+        {
+          "question": "Can I track my order?",
+          "answer": "Once your order has shipped, you will receive a tracking number via email."
+        }
+      ]
+    },
+    {
+      "category": "Account & Orders",
+      "questions": [
+        {
+          "question": "How do I create an account?",
+          "answer": "Click on the 'Sign Up' button in the top right corner and follow the instructions."
+        },
+        {
+          "question": "Can I modify my order?",
+          "answer": "Once your order has been placed, it cannot be modified. Please contact support if you have an issue."
+        },
+        {
+          "question": "How do I reset my password?",
+          "answer": "Click on 'Forgot Password' on the login page and follow the steps to reset it."
+        },
+        {
+          "question": "How do I view my order history?",
+          "answer": "You can view your order history by logging into your account and visiting the 'Order History' section."
+        }
+      ]
+    },
+    {
+      "category": "Products",
+      "questions": [
+        {
+          "question": "What sizes are available?",
+          "answer": "We offer sizes from XS to XXL. Check the sizing chart on the product page for more details."
+        },
+        {
+          "question": "How do I care for my clothes?",
+          "answer": "Each product page includes detailed care instructions for the materials used."
+        },
+        {
+          "question": "Do you offer gift cards?",
+          "answer": "Yes, we offer gift cards in various denominations. You can purchase them on our website."
+        },
+        {
+          "question": "Are your products sustainable?",
+          "answer": "We are committed to sustainability and source materials that meet our environmental standards."
+        }
+      ]
+    },
+    {
+      "category": "Payment & Billing",
+      "questions": [
+        {
+          "question": "What payment methods do you accept?",
+          "answer": "We accept Visa, MasterCard, American Express, PayPal, and Apple Pay."
+        },
+        {
+          "question": "Is it safe to enter my credit card information?",
+          "answer": "Yes, we use secure payment gateways to ensure your information is protected."
+        },
+        {
+          "question": "Can I apply a discount code to my order?",
+          "answer": "Yes, you can apply a discount code during checkout. Ensure the code is valid and applied correctly."
+        }
+      ]
+    },
+    {
+      "category": "Customer Support",
+      "questions": [
+        {
+          "question": "How can I contact customer support?",
+          "answer": "You can reach customer support by emailing support@company.com or by calling our helpline."
+        },
+        {
+          "question": "What should I do if I receive a damaged item?",
+          "answer": "Please contact our customer support team immediately with your order number and a photo of the damaged item."
+        }
+      ]
+    }
+  ]
+  

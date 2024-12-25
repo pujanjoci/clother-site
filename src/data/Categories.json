@@ -1,0 +1,19 @@
+{
+    "men": [
+        "T-Shirts", "Jeans", "Jackets", "Suits", "Shirts", "Sweaters", "Coats", 
+        "Shorts", "Pants", "Blazers", "Hats", "Belts", "Sweatpants", "Polos", 
+        "Vests", "Hoodies", "Underwear", "Socks", "Sandals", "Boots"
+    ],
+    "women": [
+        "Dresses", "Blouses", "Skirts", "Trousers", "Coats", "Jumpsuits", 
+        "Cardigans", "Tunics", "Tops", "Leggings", "Scarves", "Gloves", 
+        "Sweaters", "Jeans", "Bodysuits", "Heels", "Flats", "Bras", 
+        "Panties", "Overalls", "Ponchos", "Swimwear"
+    ],
+    "children": [
+        "T-Shirts", "Shorts", "Sweaters", "Pajamas", "Jackets", "Hats", 
+        "Socks", "Shoes", "Trousers", "Shirts", "Dresses", "Coats", 
+        "Overalls", "Rompers", "Sneakers", "Raincoats", "Mittens", 
+        "Bibs", "Onesies", "Sandals", "Boots", "Swimwear"
+    ]
+}

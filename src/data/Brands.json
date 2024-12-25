@@ -1,0 +1,5 @@
+{
+    "men": ["Nike", "Adidas", "Puma"],
+    "women": ["Chanel", "Dior", "Gucci"],
+    "children": ["Disney", "Lego", "Fisher-Price"]
+  }
