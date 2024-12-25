@@ -1,15 +1,16 @@
 import React from 'react';
 import Header from './components/Header';
-import { Routes, Route, BrowserRouter } from 'react-router-dom'; // Import BrowserRouter
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 import Home from './pages/Home';
-import About from './pages/About'; // Import the About component
-import Contact from './pages/Contact'; // Import the Contact component
-import FAQ from './pages/FAQ'; // Import the FAQ component
+import About from './pages/About';
+import Contact from './pages/Contact';
+import FAQ from './pages/FAQ';
 import './index.css';
 
 function App() {
   return (
-    <BrowserRouter basename="/clother-site">
+    <Router basename="/clother-site/">
       <div>
         <Header />
         <Routes>
@@ -19,7 +20,7 @@ function App() {
           <Route path="/faq" element={<FAQ />} /> {/* FAQ route */}
         </Routes>
       </div>
-    </BrowserRouter>
+    </Router>
   );
 }
 
