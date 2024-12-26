@@ -13,26 +13,35 @@ const BannerCarousel = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const carouselRef = useRef(null);
+  const timerRef = useRef(null);
+
+  const resetTimer = () => {
+    clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setCurrentBannerIndex((prevIndex) => (prevIndex + 1) % banners.length);
+    }, 5000);
+  };
 
   // Automatically cycle banners every 5 seconds
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentBannerIndex((prevIndex) => (prevIndex + 1) % banners.length);
-    }, 5000);
+    resetTimer();
 
-    return () => clearInterval(interval); // Cleanup the interval on unmount
+    return () => clearInterval(timerRef.current); // Cleanup the interval on unmount
   }, []);
 
   const goToBanner = (index) => {
     setCurrentBannerIndex(index);
+    resetTimer();
   };
 
   const nextBanner = () => {
     setCurrentBannerIndex((prevIndex) => (prevIndex + 1) % banners.length);
+    resetTimer();
   };
 
   const prevBanner = () => {
     setCurrentBannerIndex((prevIndex) => (prevIndex - 1 + banners.length) % banners.length);
+    resetTimer();
   };
 
   const handleMouseDown = (e) => {

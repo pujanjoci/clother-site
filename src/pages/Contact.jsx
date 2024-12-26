@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
+import Footer from '../components/Footer';
+
 export default function BasicForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -59,7 +61,7 @@ export default function BasicForm() {
   };
 
   const showToast = (type, message) => {
-    if (toastQueue.length >= 3) {
+    if (toastQueue.length >= 2) {
       // Remove the oldest toast when more than 5 toasts exist
       const oldestToastId = toastQueue.shift();
       toast.dismiss(oldestToastId);
@@ -137,6 +139,7 @@ export default function BasicForm() {
 
   return (
     <div>
+      <div className='h-[35rem]'>
       <Toaster />
       <form onSubmit={onSubmit} className="max-w-lg mx-auto mt-20 p-8 bg-white shadow-md rounded">
         <div className="mb-4">
@@ -195,6 +198,8 @@ export default function BasicForm() {
           </button>
         </div>
       </form>
+      </div>
+      <Footer />
     </div>
   );
 }

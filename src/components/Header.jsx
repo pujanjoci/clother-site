@@ -75,9 +75,6 @@ const Header = () => {
               <button onClick={() => handleNavigationClick('/contact')} className="border bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-600/10 hover:border-neutral-600 hover:text-neutral-600 transition duration-150">
                 Contact
               </button>
-              <button onClick={() => handleNavigationClick('/faq')} className="border border-neutral-600 text-neutral-500 px-4 py-2 rounded-md hover:bg-neutral-700 hover:text-white ml-2 transition duration-150">
-                FAQ
-              </button>
             </div>
           </div>
 
@@ -116,7 +113,6 @@ const Header = () => {
               <button onClick={() => handleNavigationClick('/about')} className="text-gray-800 hover:bg-gray-700 px-6 py-3 rounded-md text-base font-medium">About</button>
               <button onClick={handleClothesClick} className="text-gray-800 hover:bg-gray-700 px-6 py-3 rounded-md text-base font-medium">Clothes</button>
               <button onClick={() => handleNavigationClick('/contact')} className="border border-blue-600 text-black px-6 py-3 rounded-md text-base font-medium hover:bg-blue-600/10">Contact</button>
-              <button onClick={() => handleNavigationClick('/faq')} className="border border-neutral-600 text-neutral-600 px-6 py-3 rounded-md text-base font-medium hover:bg-neutral-700 hover:text-white">FAQ</button>
             </nav>
           </div>
         </div>
