@@ -9,6 +9,9 @@ export default function BasicForm() {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [remainingTime, setRemainingTime] = useState(0);
 
+  // Array to track active toast IDs
+  const toastQueue = [];
+
   useEffect(() => {
     const lockStartTime = localStorage.getItem('lockStartTime');
     const lockDuration = parseInt(localStorage.getItem('lockDuration'), 10) || 5 * 60 * 1000; // 5 minutes in milliseconds
@@ -55,10 +58,23 @@ export default function BasicForm() {
     return true;
   };
 
+  const showToast = (type, message) => {
+    if (toastQueue.length >= 3) {
+      // Remove the oldest toast when more than 5 toasts exist
+      const oldestToastId = toastQueue.shift();
+      toast.dismiss(oldestToastId);
+    }
+
+    // Add a new toast and store its ID
+    const newToastId = type === 'error' ? toast.error(message) : toast.success(message);
+    toastQueue.push(newToastId);
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
+
     if (!validateForm()) {
-      toast.error(error);
+      showToast('error', 'Please fill out at least one field before submitting.');
       return;
     }
 
@@ -73,7 +89,7 @@ export default function BasicForm() {
     .then(response => response.json())
     .then(response => {
       if (response.code === 200) {
-        toast.success("We received your submission, thank you!");
+        showToast('success', "We received your submission, thank you!");
         setIsButtonDisabled(true);
         const now = new Date().getTime();
         let lockDuration = 5 * 60 * 1000; // 5 minutes in milliseconds
@@ -104,12 +120,12 @@ export default function BasicForm() {
         setError('');
       } else {
         setError(response.message);
-        toast.error(response.message);
+        showToast('error', response.message);
       }
     })
     .catch(err => {
       setError(err.message || 'An error occurred');
-      toast.error(err.message || 'An error occurred');
+      showToast('error', err.message || 'An error occurred');
     });
   };
 

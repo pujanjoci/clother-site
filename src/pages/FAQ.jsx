@@ -4,6 +4,7 @@ import faqData from "../data/FAQData.json"; // Import the JSON data
 const FAQ = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Scroll to top when the page is loaded or reloaded
   useEffect(() => {
@@ -23,16 +24,37 @@ const FAQ = () => {
     setSelectedQuestionIndex(selectedQuestionIndex === index ? null : index);
   };
 
+  // Toggle the mobile menu visibility
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
-    <div className="flex">
+    <div className="flex flex-col md:flex-row">
+      {/* Mobile Menu Toggle Button */}
+      <div className="md:hidden p-4 text-center">
+        <button
+          onClick={toggleMobileMenu}
+          className="text-black text-xl font-semibold"
+        >
+          Categories
+        </button>
+      </div>
+
       {/* Categories Sidebar */}
-      <div className="w-56 h-[38rem] bg-gray-100 p-4 flex flex-col justify-start items-center">
-        <h2 className="text-2xl font-bold mb-4">Categories</h2>
+      <div
+        className={`w-full md:w-56 bg-gray-100 p-2 flex flex-col justify-start items-center md:fixed md:left-0 md:top-[75px] md:bottom-0 md:h-full ${
+          isMobileMenuOpen ? "block" : "hidden md:block"
+        }`}
+      >
+        <h2 className="text-2xl md:text-center font-bold mb-4 md:mb-2 hidden md:block">Categories</h2>
         <ul className="space-y-2 w-full">
           {faqData.map((category, index) => (
             <li
               key={index}
-              className={`cursor-pointer p-2 rounded text-center hover:bg-gray-300 ${selectedCategory === category.category ? "bg-gray-300" : ""}`}
+              className={`cursor-pointer p-2 rounded text-center hover:bg-gray-300 ${
+                selectedCategory === category.category ? "bg-gray-300" : ""
+              }`}
               onClick={() => handleCategoryClick(category.category)}
             >
               {category.category}
@@ -42,7 +64,7 @@ const FAQ = () => {
       </div>
 
       {/* Questions and Answers */}
-      <div className="w-full md:w-3/4 p-6">
+      <div className="w-full md:w-3/4 p-6 mt-2 md:mt-0 md:ml-56">
         {selectedCategory ? (
           <>
             <h2 className="text-3xl font-bold mb-6">{selectedCategory} Questions</h2>
@@ -52,11 +74,17 @@ const FAQ = () => {
                 <div key={index} className="mb-4">
                   <button
                     onClick={() => handleQuestionClick(index)}
-                    className={`w-full text-left text-xl font-semibold flex items-center justify-start transition-all duration-300 ${selectedQuestionIndex === index ? 'text-black' : 'text-gray-500 hover:text-gray-900'} focus:outline-none`}
+                    className={`w-full text-left text-xl font-semibold flex items-center justify-start transition-all duration-300 ${
+                      selectedQuestionIndex === index
+                        ? "text-black"
+                        : "text-gray-500 hover:text-gray-900"
+                    } focus:outline-none`}
                   >
                     {/* More than symbol initially, down triangle when clicked */}
                     <span
-                      className={`mr-2 transition-transform duration-300 ${selectedQuestionIndex === index ? "rotate-90" : ""}`}
+                      className={`mr-2 transition-transform duration-300 ${
+                        selectedQuestionIndex === index ? "rotate-90" : ""
+                      }`}
                     >
                       ⮞
                     </span>
