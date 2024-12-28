@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
 import Subheader from '../components/Subheader';  // Import Subheader component
@@ -13,9 +13,38 @@ const Header = () => {
     setIsOpen(!isOpen);
   };
 
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
+
+  const handleOutsideClick = (event) => {
+    // Ensure clicks outside the white menu box close the menu
+    if (event.target.id === 'mobileMenuOverlay') {
+      closeMenu();
+    }
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      // Apply styles to lock scrolling
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    } else {
+      // Reset styles to unlock scrolling
+      document.body.style.position = '';
+      document.body.style.width = '';
+    }
+
+    // Cleanup when component unmounts
+    return () => {
+      document.body.style.position = '';
+      document.body.style.width = '';
+    };
+  }, [isOpen]);
+
   const handleClothesClick = () => {
     if (isMobile) {
-      setIsOpen(false); // Close the menu on mobile
+      closeMenu(); // Close the menu on mobile
       navigate('/cm'); // Redirect to /cm on mobile
     } else {
       setIsSubheaderOpen(!isSubheaderOpen); // Toggle subheader on desktop
@@ -24,22 +53,16 @@ const Header = () => {
 
   const handleNavigationClick = (path) => {
     if (isMobile) {
-      setIsOpen(false); // Close the mobile menu after navigation
+      closeMenu(); // Close the mobile menu after navigation
     }
     navigate(path); // Navigate to the provided path
-  };
-
-  const handleOutsideClick = (event) => {
-    if (event.target.id === 'mobileMenu') {
-      setIsOpen(false); // Close the menu when clicked outside
-    }
   };
 
   return (
     <>
       <header className="bg-white shadow-md relative z-30">
         <div className="container mx-auto flex justify-between items-center py-4 px-6">
-          <div className="text-2xl font-bold text-gray-800 font-serif">
+          <div className="text-3xl font-bold text-gray-800 font-tomatoes">
             Clother
           </div>
 
@@ -102,11 +125,14 @@ const Header = () => {
 
       {isOpen && (
         <div
-          id="mobileMenu"
+          id="mobileMenuOverlay"
           onClick={handleOutsideClick}
-          className="fixed inset-0 bg-black bg-opacity-50 z-20 flex justify-end pt-12"
+          className="fixed inset-0 bg-black bg-opacity-85 z-20 flex justify-end pt-12"
         >
-          <div className="bg-white w-2/5 h-full p-6 space-y-6 transform transition-transform duration-300 ease-in-out">
+          <div
+            id="mobileMenu"
+            className="bg-white bg-opacity-85 w-2/5 h-full p-6 space-y-6 transform transition-transform duration-300 ease-in-out"
+          >
             {/* Vertical Menu Items */}
             <nav className="flex flex-col space-y-4">
               <button onClick={() => handleNavigationClick('/')} className="text-gray-800 hover:bg-gray-700 px-6 py-3 rounded-md text-base font-medium">Home</button>

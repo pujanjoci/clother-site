@@ -3,91 +3,92 @@ import { useNavigate } from 'react-router-dom';
 
 const Footer = () => {
   const navigate = useNavigate();
+
   const handleNavigationClick = (path) => {
     navigate(`/${path}`);
   };
 
   return (
-    <footer className="bg-gray-900 text-gray-300 py-8">
+    <footer className="bg-neutral-50 text-neutral-600 py-8 border-t border-black">
       <div className="container mx-auto px-4">
         <div className="flex flex-wrap justify-between">
           {/* Brand and Description */}
           <div className="w-full md:w-1/3 mb-6 md:mb-0">
-            <h1 className="text-2xl font-bold text-white">Clothify</h1>
-            <p className="mt-2 text-gray-400">
+          <h1 className="text-4xl md:text-2xl font-bold text-center md:text-left text-neutral-600 font-tomatoes">Clother</h1>
+            <p className="md:text-lg text-xl mt-2 text-neutral-600 text-center md:text-left md:mr-10 font-sans italic">
               Discover the latest trends and timeless classics for your wardrobe. Shop with us and redefine your style.
             </p>
           </div>
 
-          {/* Quick Links */}
-          <div className="w-full md:w-1/3 mb-6 md:mb-0">
-            <h2 className="text-lg font-semibold text-white">Quick Links</h2>
-            <ul className="mt-2 space-y-2">
-              <li>
-                <button
-                  onClick={() => handleNavigationClick('/shop')}
-                  className="text-white px-4 rounded-md hover:underline hover:text-neutral-600 transition duration-150"
-                >
-                  Shop
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => handleNavigationClick('/about')}
-                  className="text-white px-4 rounded-md hover:underline hover:text-neutral-600 transition duration-150"
-                >
-                  About Us
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => handleNavigationClick('/contact')}
-                  className="ml-3 border bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-600/10 hover:border-neutral-600 hover:text-neutral-600 transition duration-150"
-                >
-                  Contact
-                </button>
-              </li>
-              <li>
-              <button onClick={() => handleNavigationClick('/faq')} 
-              className="ml-3 border border-white text-white px-4 py-2 rounded-md hover:bg-neutral-200 hover:text-neutral-800 transition duration-150">
+          {/* Quick Links - Now horizontal */}
+          <div className="w-full md:w-1/3 mb-4 md:mb-0">
+            <h2 className="text-xl md:text-lg font-semibold text-center md:text-left text-neutral-600 font-tomatoes">Quick Links</h2>
+            <div className="mt-2 flex space-x-4"> {/* Changed to flex and space-x-4 for horizontal alignment */}
+              <button
+                onClick={() => handleNavigationClick('shop')}
+                className="border border-neutral-600 text-neutral-600 px-4 rounded-md hover:bg-emerald-600 hover:text-neutral-50 transition duration-150"
+              >
+                Shop
+              </button>
+              <button
+                onClick={() => handleNavigationClick('about')}
+                className="border border-neutral-600 text-neutral-600 px-4 rounded-md hover:bg-slate-600 hover:text-neutral-50 transition duration-150"
+              >
+                About Us
+              </button>
+              <button
+                onClick={() => handleNavigationClick('contact')}
+                className="ml-3 border border-neutral-500 text-neutral-600 px-4 py-2 rounded-md hover:bg-blue-600 hover:border-blue-500 hover:text-neutral-50 transition duration-150"
+              >
+                Contact
+              </button>
+              <button
+                onClick={() => handleNavigationClick('faq')}
+                className="ml-3 border border-neutral-600 text-neutral-600 px-4 py-2 rounded-md hover:bg-neutral-800 hover:text-neutral-50 transition duration-150"
+              >
                 FAQ
               </button>
-              </li>
-            </ul>
+            </div>
           </div>
 
           {/* Social Media */}
           <div className="w-full md:w-1/3">
-            <h2 className="text-lg font-semibold text-white">Follow Us</h2>
+            <h2 className="text-2xl md:text-lg font-semibold text-neutral-600 font-tomatoes">Follow Us</h2>
             <div className="flex mt-2 space-x-4">
-              <button
-                onClick={() => window.open('https://facebook.com', '_blank')}
-                className="hover:text-white"
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-neutral-600"
               >
                 Facebook
-              </button>
-              <button
-                onClick={() => window.open('https://instagram.com', '_blank')}
-                className="hover:text-white"
+              </a>
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-neutral-600"
               >
                 Instagram
-              </button>
-              <button
-                onClick={() => window.open('https://twitter.com', '_blank')}
-                className="hover:text-white"
+              </a>
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-neutral-600"
               >
                 Twitter
-              </button>
+              </a>
             </div>
           </div>
         </div>
 
-        <hr className="border-gray-700 my-6" />
+        <hr className="border-neutral-600 my-6" />
 
         {/* Copyright Section */}
         <div className="text-center">
-          <p className="text-gray-500">
-            &copy; {new Date().getFullYear()} Clothify. All rights reserved.
+          <p className="text-neutral-600 font-tomatoes">
+            &copy;2024 - {new Date().getFullYear()} Clother. All rights reserved.
           </p>
         </div>
       </div>

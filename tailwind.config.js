@@ -4,7 +4,12 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}", // Adjust the path based on your project structure
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        handwriting: ['"Dancing Script"', 'cursive'], // Add your custom font
+        tomatoes: ['Tomatoes', 'cursive'],
+      },
+    },
   },
   plugins: [],
 }

@@ -1,0 +1,45 @@
+/* Pulsing dot animation */
+@keyframes ping {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  75% {
+    transform: scale(2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Apply the pulsing animation to the dots */
+.pulse-dot {
+  width: 15px; 
+  height: 15px; 
+  background-color: #3b82f6; /* Tailwind's blue-500 */
+  border-radius: 50%;
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.dot-1 {
+  animation-delay: 0.1s;
+}
+
+.dot-2 {
+  animation-delay: 0.2s;
+}
+
+.dot-3 {
+  animation-delay: 0.3s;
+}
+
+/* Center the dots on the page */
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  gap: 1rem; /* Space between dots */
+}
