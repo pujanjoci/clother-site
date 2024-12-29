@@ -148,7 +148,7 @@ const BannerCarousel = () => {
 
   return (
     <div
-  className="relative flex flex-col items-center justify-center w-full md:w-[1423px] h-96 overflow-hidden mx-auto"
+  className="relative flex flex-col items-center justify-center w-full h-96 overflow-hidden mx-auto"
   ref={carouselRef}
   onMouseDown={handleMouseDown}
   onMouseMove={handleMouseMove}
@@ -163,7 +163,7 @@ const BannerCarousel = () => {
   <img
     src={banners[currentBannerIndex]}
     alt={`Banner ${currentBannerIndex + 1}`}
-    className={`w-full md:w-[1520px] h-full object-cover ${isMobile ? '' : 'aspect-[16/9]'}`}
+    className={`w-full h-full object-cover ${isMobile ? '' : 'aspect-[16/9]'}`}
   />
 
   {/* Dots for navigation */}

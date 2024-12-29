@@ -41,7 +41,7 @@ const SalesContainer = () => {
   const displayText = currentIndex === 0 ? 'Exclusive Fits' : 'New Offers';
 
   return (
-    <div className="max-w-7xl mx-auto pt-1 pb-10">
+    <div className="max-w-[80%] mx-auto pt-1 pb-10">
       {/* Conditional Text with Handwriting Font */}
       <h2 className="text-center text-3xl font-handwriting text-neutral-900 mb-6">
         {displayText}
