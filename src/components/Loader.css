@@ -1,45 +1,31 @@
-/* Pulsing dot animation */
-@keyframes ping {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  75% {
-    transform: scale(2);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
+/* Loader.css */
 
-/* Apply the pulsing animation to the dots */
-.pulse-dot {
-  width: 15px; 
-  height: 15px; 
-  background-color: #3b82f6; /* Tailwind's blue-500 */
-  border-radius: 50%;
-  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
-}
-
-.dot-1 {
-  animation-delay: 0.1s;
-}
-
-.dot-2 {
-  animation-delay: 0.2s;
-}
-
-.dot-3 {
-  animation-delay: 0.3s;
-}
-
-/* Center the dots on the page */
 .loader-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  gap: 1rem; /* Space between dots */
+  height: 100vh; /* Full viewport height */
+  background-color: #ffffff; /* White background */
+  width: 100%; /* Full viewport width */
+  position: fixed; /* Stays on top of the content */
+  top: 0;
+  left: 0;
+  z-index: 9999; /* Ensure it appears above other content */
+  transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth fade-out */
+}
+
+.loader-container.hidden {
+  opacity: 0; /* Fade out effect */
+  visibility: hidden; /* Make it disappear */
+}
+
+.loader-gif {
+  width: 80px; /* Adjust size for mobile */
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .loader-gif {
+    width: 60px; /* Slightly smaller size for smaller screens */
+  }
 }

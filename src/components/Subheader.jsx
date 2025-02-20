@@ -1,135 +1,201 @@
-import React, { useState, useRef, useEffect } from "react";
-import categoriesData from "../data/Categories.json";
-import { FaSearch } from "react-icons/fa";
-import toast, { Toaster } from 'react-hot-toast';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import categoriesData from '../data/Categories.json';
+import toast, { Toaster } from 'react-hot-toast'; // Import react-hot-toast
+import { FaSearch } from 'react-icons/fa';
 
-const Subheader = () => {
+import Footer from '../components/Footer';
+
+const CategoriesMobile = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [categories, setCategories] = useState([]);
-  const [activeSelections, setActiveSelections] = useState([]);
-  const [toastIds, setToastIds] = useState([]);
-  const [menuStatus, setMenuStatus] = useState(false);
-  const subheaderRef = useRef(null);
-  const categoryMenuRef = useRef(null);
-  const menuButtonRef = useRef(null);
+  const [selectedItems, setSelectedItems] = useState([]);
+  const navigate = useNavigate();
+  const [toastCount, setToastCount] = useState(0); // Track the active toasts
 
-  const toggleCategoryMenu = (category) => {
-    if (menuStatus && selectedCategory === category) {
-      setSelectedCategory(null);
-      setCategories([]);
-      setMenuStatus(false);
-    } else {
-      setSelectedCategory(category);
-      setCategories(categoriesData[category]);
-      setMenuStatus(true);
+  const ITEM_LIFETIME = 5 * 60 * 1000; // 5 minutes in milliseconds
+
+  // Check localStorage for saved data and load it if valid
+  useEffect(() => {
+    const storedData = localStorage.getItem('selectedItems');
+    const storedTime = localStorage.getItem('selectedItemsTimestamp');
+    
+    if (storedData && storedTime) {
+      const currentTime = new Date().getTime();
+      const timeDiff = currentTime - storedTime;
+
+      // Only load data if it is within the last 5 minutes
+      if (timeDiff < ITEM_LIFETIME) {
+        setSelectedItems(JSON.parse(storedData));
+      } else {
+        localStorage.removeItem('selectedItems');
+        localStorage.removeItem('selectedItemsTimestamp');
+      }
     }
+  }, []);
+
+  // Save selected items to localStorage with timestamp
+  const saveToLocalStorage = (items) => {
+    const timestamp = new Date().getTime();
+    localStorage.setItem('selectedItems', JSON.stringify(items));
+    localStorage.setItem('selectedItemsTimestamp', timestamp.toString());
   };
 
-  const handleSubcategoryClick = (subcategory) => {
-    const itemFullName = `${selectedCategory}.${subcategory}`;
+  // Handle item selection
+  const handleItemSelect = (category, item) => {
+    const itemIndex = selectedItems.findIndex(
+      (selectedItem) => selectedItem.category === category && selectedItem.item === item
+    );
 
-    if (activeSelections.includes(itemFullName)) {
-      setActiveSelections(prevSelections =>
-        prevSelections.filter(item => item !== itemFullName)
-      );
+    if (itemIndex > -1) {
+      setSelectedItems((prevItems) => {
+        const newItems = prevItems.filter((_, index) => index !== itemIndex);
+        saveToLocalStorage(newItems);
+        return newItems;
+      });
     } else {
-      if (activeSelections.length >= 5) {
-        if (toastIds.length >= 2) {
-          toast.dismiss(toastIds[0]);
-          setToastIds(prevToastIds => prevToastIds.slice(1));
-        }
-        const newToastId = toast.error("Only 5 items can be selected at a time.");
-        setToastIds(prevToastIds => [...prevToastIds, newToastId]);
+      if (selectedItems.length < 5) {
+        setSelectedItems((prevItems) => {
+          const newItems = [...prevItems, { category, item }];
+          saveToLocalStorage(newItems);
+          return newItems;
+        });
       } else {
-        setActiveSelections(prevSelections => [...prevSelections, itemFullName]);
+        handleToast('Only 5 items at a time'); // Show toast with react-hot-toast
       }
     }
   };
 
-  const handleClickOutside = (event) => {
-    if (
-      subheaderRef.current &&
-      !subheaderRef.current.contains(event.target) &&
-      categoryMenuRef.current &&
-      !categoryMenuRef.current.contains(event.target) &&
-      !menuButtonRef.current.contains(event.target)
-    ) {
-      setSelectedCategory(null);
-      setCategories([]);
-      setMenuStatus(false);
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+  };
+
+  const handleSearchClick = () => {
+    navigate('/search', { state: { items: selectedItems } });
+  };
+
+  const resetCategorySelection = () => {
+    setSelectedCategory(null);
+  };
+
+  // Limit active toasts to 3
+  const handleToast = (message) => {
+    if (toastCount < 3) {
+      toast(message, {
+        onShow: () => setToastCount((prevCount) => prevCount + 1), // Increase toast count when shown
+        onHide: () => setToastCount((prevCount) => prevCount - 1), // Decrease toast count when hidden
+      });
     }
   };
 
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  const categoryColors = {
+    men: 'bg-blue-500',
+    women: 'bg-pink-500',
+    children: 'bg-green-500',
+  };
 
   return (
-    <>
-      <div
-        ref={menuButtonRef}
-        className="absolute left-0 right-0 bg-white border-t border-gray-300 shadow-md z-20"
-      >
-        <div className="container mx-auto py-4 flex justify-around" ref={subheaderRef}>
-          {["men", "women", "children"].map(category => (
-            <button
-              key={category}
-              onClick={() => toggleCategoryMenu(category)}
-              className={`text-lg font-semibold text-gray-700 hover:text-gray-900 ${
-                selectedCategory === category ? "text-gray-900 underline" : ""
-              }`}
-            >
-              {category.toUpperCase()}
-            </button>
-          ))}
-        </div>
-      </div>
+    <div className="bg-gray-50 min-h-screen p-6">
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+        toastOptions={{
+          duration: 5000, // Toast duration
+        }}
+      />
 
-      {selectedCategory && (
-        <div
-          ref={categoryMenuRef}
-          className="absolute top-[135px] left-0 right-0 bg-white border-t border-gray-300 shadow-md z-20"
-        >
-          <div className="container mx-auto py-4">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4 text-center">
-              Categories
-            </h2>
-            <div className="grid grid-cols-10 gap-4">
-              {categories.map((category, index) => (
-                <div
-                  key={index}
-                  onClick={() => handleSubcategoryClick(category)}
-                  className={`text-gray-600 p-2 border border-gray-300 text-center rounded cursor-pointer hover:bg-gray-200 hover:text-gray-800 ${
-                    activeSelections.includes(`${selectedCategory}.${category}`)
-                      ? "bg-gray-300 text-gray-900"
-                      : ""
-                  }`}
-                >
-                  {category}
-                </div>
-              ))}
-            </div>
-          </div>
+      <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">Select a Category</h1>
 
-          <button className="absolute top-2 right-5 text-neutral-600 p-3 rounded-full shadow-lg hover:bg-neutral-500 hover:text-neutral-50 focus:outline-none">
-            <FaSearch />
+      {selectedItems.length > 0 && (
+        <div className="mb-6 text-center">
+          <button
+            onClick={handleSearchClick}
+            className="flex items-center justify-center bg-indigo-600 text-white p-4 rounded-full shadow-md hover:bg-indigo-700 transition duration-300"
+          >
+            <FaSearch className="mr-2" />
+            Search Selected Items
           </button>
         </div>
       )}
 
-      <Toaster
-        position="top-center"
-        reverseOrder={false}
-        toastOptions={{
-          duration: 3000,
-        }}
-      />
-    </>
+      {!selectedCategory ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {categoriesData ? (
+            Object.keys(categoriesData).map((categoryKey) => (
+              <div key={categoryKey} className={`bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 ease-in-out`}>
+                <button
+                  onClick={() => handleCategorySelect(categoryKey)}
+                  className={`w-full text-lg font-medium text-white p-6 rounded-t-lg ${categoryColors[categoryKey]} hover:bg-opacity-80 transition duration-300`}
+                >
+                  {categoryKey.charAt(0).toUpperCase() + categoryKey.slice(1)}
+                </button>
+              </div>
+            ))
+          ) : (
+            <p>Loading categories...</p>
+          )}
+        </div>
+      ) : (
+        <div>
+          <button
+            onClick={resetCategorySelection}
+            className="text-blue-500 hover:underline mb-4 inline-block"
+          >
+            Back to Categories
+          </button>
+          <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">
+            {selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Items
+          </h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {categoriesData[selectedCategory].map((item, index) => {
+              const isSelected = selectedItems.some(
+                (selected) => selected.category === selectedCategory && selected.item === item
+              );
+              return (
+                <div
+                  key={index}
+                  className={`bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 ease-in-out`}
+                >
+                  <button
+                    onClick={() => handleItemSelect(selectedCategory, item)}
+                    className={`w-full text-lg font-medium p-6 rounded-b-lg ${
+                      isSelected ? 'bg-indigo-300 text-white' : 'bg-gray-200 text-gray-700'
+                    } hover:bg-indigo-100 transition duration-300`}
+                  >
+                    {item}
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="mt-6">
+            {selectedItems.length > 0 && (
+              <button
+                onClick={handleSearchClick}
+                className="flex items-center justify-center bg-indigo-600 text-white p-4 rounded-full shadow-md hover:bg-indigo-700 transition duration-300"
+              >
+                <FaSearch className="mr-2" />
+                Search Selected Items
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
+      <div className="mt-6 mb-20">
+        <h3 className="text-xl font-semibold text-gray-700">Selected Items:</h3>
+        <ul className="list-disc pl-5">
+          {selectedItems.map((selected, index) => (
+            <li key={index} className="text-lg text-gray-700">
+              {selected.item} ({selected.category.charAt(0).toUpperCase() + selected.category.slice(1)})
+            </li>
+          ))}
+        </ul>
+      </div>
+      <Footer />
+    </div>
   );
 };
 
-export default Subheader;
+export default CategoriesMobile;

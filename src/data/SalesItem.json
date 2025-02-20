@@ -1,0 +1,63 @@
+[
+    {
+      "id": 1,
+      "name": "Red Dress",
+      "price": "$29.99",
+      "image": "red-dress.png"
+    },
+    {
+      "id": 2,
+      "name": "Blue Jeans",
+      "price": "$39.99",
+      "image": "blue-jeans.png"
+    },
+    {
+      "id": 3,
+      "name": "Black Jacket",
+      "price": "$59.99",
+      "image": "black-jacket.png"
+    },
+    {
+      "id": 4,
+      "name": "White T-Shirt",
+      "price": "$19.99",
+      "image": "white-tshirt.png"
+    },
+    {
+      "id": 5,
+      "name": "Green Hoodie",
+      "price": "$49.99",
+      "image": "green-hoodie.png"
+    },
+    {
+      "id": 6,
+      "name": "Yellow Skirt",
+      "price": "$34.99",
+      "image": "yellow-skirt.png"
+    },
+    {
+      "id": 7,
+      "name": "Brown Boots",
+      "price": "$69.99",
+      "image": "brown-boots.png"
+    },
+    {
+      "id": 8,
+      "name": "Purple Sweater",
+      "price": "$44.99",
+      "image": "purple-sweater.png"
+    },
+    {
+      "id": 9,
+      "name": "Grey Shorts",
+      "price": "$24.99",
+      "image": "grey-shorts.png"
+    },
+    {
+      "id": 10,
+      "name": "Pink Scarf",
+      "price": "$14.99",
+      "image": "pink-scarf.png"
+    }
+  ]
+  
